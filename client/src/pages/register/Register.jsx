@@ -1,20 +1,20 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
-import { LoginUser } from '../../api/users';
-import { useEffect } from 'react';
+import { Button, Form, Input, Radio } from 'antd';
+import { RegisterUser } from '../../api/users';
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 
-function Login() {
+function Register() {
   const navigate = useNavigate();
   const onFinish = async (values) => {
+    values.isAdmin = values.isAdmin ? true : false;
     try {
-      const response = await LoginUser(values);
+      const response = await RegisterUser(values);
       if (response.success) {
-        localStorage.setItem('token', response.token);
+        // localStorage.setItem('token', response.token);
         console.log(response);
-        message.success("user Logged in");
-        window.location.href = '/';
+        message.success("user Created Successfully");
+        window.location.href = '/login';
       } else {
         console.log(response.message);
         message.error(response.message);
@@ -24,24 +24,17 @@ function Login() {
     }
   }
 
-  const goToRegister = () => {
-    console.log('go to register');
-    navigate("/register");
+  const goToLogin = () => {
+    console.log('go to login');
+    navigate("/login");
   }
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      navigate("/");
-    }
-  }, []);
-
 
   return (
   <header className="App-header">
     <main className="main-area mw-500">
       <section className="header-section">
         <h1>
-          Login to BookMyShow
+          Create an account with BookMyShow
         </h1>
       </section>
       <section className="form-section">
@@ -49,6 +42,19 @@ function Login() {
             layout='vertical'
             onFinish={onFinish}
         >
+          <Form.Item
+            label="name"
+            htmlFor="name"
+            name="name"
+            className="d-block"
+            rules={[{ required: true, message: "Name is required" }]}
+          >
+            <Input
+              id="name"
+              type="text"
+              placeholder="Enter your Name"
+            ></Input>
+          </Form.Item>
           <Form.Item
             label="Email"
             htmlFor="email"
@@ -76,6 +82,16 @@ function Login() {
 
             ></Input>
           </Form.Item>
+          <Form.Item 
+            label="Admin User"
+            name="isAdmin"
+            rules={[{ required: true, message: "Select the user type"}]}
+          >
+            <Radio.Group>
+              <Radio value="Admin"> Yes </Radio>
+              <Radio value="User"> No </Radio>
+            </Radio.Group>
+          </Form.Item>
           <Form.Item className="d-block">
             <Button
               type="primary"
@@ -83,14 +99,14 @@ function Login() {
               htmlType="submit"
               style={{ fontSize: "1rem", fontWeight: "600" }}
             >
-              Login
+              Register
             </Button>
           </Form.Item>
         </Form>
       </section>
       <section className='register-section'>
-          <Button type="primary" onClick={goToRegister}>
-            Don't have an account ? Register  
+          <Button type="primary" onClick={goToLogin}>
+            Back To Login
           </Button>
       </section>
     </main>
@@ -98,4 +114,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default Register;

@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const userRoutes = require('./routes/userRoutes');
-const dburl = "mongodb+srv://kraghul1905:YdjjErJzUgSICrJr@cluster0.drdvh.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0";
+const dburl = "mongodb+srv://kraghul1905:YdjjErJzUgSICrJr@cluster0.drdvh.mongodb.net/scaler_practice?retryWrites=true&w=majority&appName=Cluster0";
 
 require('dotenv').config();
 
