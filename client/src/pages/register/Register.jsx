@@ -7,7 +7,7 @@ import { message } from "antd";
 function Register() {
   const navigate = useNavigate();
   const onFinish = async (values) => {
-    values.isAdmin = values.isAdmin ? true : false;
+    values.isAdmin = values.isAdmin === 'Admin' ? true : false;
     try {
       const response = await RegisterUser(values);
       if (response.success) {
