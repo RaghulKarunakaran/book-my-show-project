@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const authMiddleware = require("../middlewares/authMiddleware");
 
 router.post('/register', async (req, res) => {
   try {
@@ -36,7 +37,6 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    console.log('login');
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
@@ -71,5 +71,32 @@ router.post('/login', async (req, res) => {
       console.log(err);
     }
 })
+
+router.get('/get-current-user', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId).select("-password");
+
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.send({
+      success: true,
+      message: "You are authorised",
+      data: user,
+    });
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+
+    res.status(500).send({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+});
 
 module.exports = router;
