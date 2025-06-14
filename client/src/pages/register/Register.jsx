@@ -11,8 +11,6 @@ function Register() {
     try {
       const response = await RegisterUser(values);
       if (response.success) {
-        // localStorage.setItem('token', response.token);
-        console.log(response);
         message.success("user Created Successfully");
         window.location.href = '/login';
       } else {
