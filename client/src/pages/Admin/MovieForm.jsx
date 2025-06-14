@@ -1,8 +1,26 @@
 import { Col, Modal, Row, Form, Input, Select, Button, message } from "antd";
 import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
-import {addMovie} from "../../api/movies"
-function MovieForm({ isModalOpen, setIsModalOpen }) {
+import {addMovie, updateMovie} from "../../api/movies"
+import {useEffect} from "react";
+function MovieForm({ isModalOpen, setIsModalOpen, isEditMovie }) {
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (isEditMovie) {
+      form.setFieldsValue({
+        title: isEditMovie.title,
+        description: isEditMovie.description,
+        poster: isEditMovie.poster,
+        genre: isEditMovie.genre,
+        language: isEditMovie.language,
+        duration: isEditMovie.duration,
+        releaseDate: isEditMovie.releaseDate?.substring(0, 10), // optional format
+      });
+    } else {
+      form.resetFields(); // clear form for add new
+    }
+  }, [isEditMovie, form]);
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -14,8 +32,15 @@ function MovieForm({ isModalOpen, setIsModalOpen }) {
 
   const onFinish = async (values) => {
     console.log(values);
-    const response = await addMovie(values);
-    console.log(response);
+    if (!isEditMovie) {
+      const response = await addMovie(values);
+      console.log(response);
+    } else {
+      const editedMovie = values;
+      editedMovie.movieId = isEditMovie._id
+      const response = await updateMovie(values);
+      console.log(response);
+    }
   }
 
   return (
@@ -25,6 +50,7 @@ function MovieForm({ isModalOpen, setIsModalOpen }) {
       width={800}
     >
       <Form
+        form={form}
         layout="vertical"
         style={{ width: "100%" }}
         onFinish={onFinish}

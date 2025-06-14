@@ -18,6 +18,16 @@ export const addMovie = async (values) => {
     }
 }
 
+export const updateMovie = async (values) => {
+    console.log(values);
+    try {
+        const response = await axiosInstance.put('api/movies/update-movie', values);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 export const getMovieById = async (id) => {
     try{

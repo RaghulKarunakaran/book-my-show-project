@@ -12,6 +12,7 @@ import {
 function MovieList() {
   const [movies, setMovies] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditMovie, setEditMovie] = useState(null);
   const getData = async () => {
     const response = await getAllMovies();
     let allMovies = response.data;
@@ -23,7 +24,8 @@ function MovieList() {
     );
   }
   const handleEdit = (value) => {
-    console.log(value);
+    setIsModalOpen(true);
+    setEditMovie(value);
   };
   const handleDelete = (value) => {
     console.log(value);
@@ -113,6 +115,7 @@ function MovieList() {
         <Button
           onClick={() => {
             setIsModalOpen(true);
+            setEditMovie(null);
           }}
         >
           Add Movie
@@ -123,7 +126,7 @@ function MovieList() {
           <MovieForm
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
-          
+            isEditMovie={isEditMovie}
           />
         }
         <Table columns={tableHeadings} dataSource={movies} scroll={{ x: 'max-content' }} />
