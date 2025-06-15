@@ -8,11 +8,14 @@ import {
     EditOutlined,
     DeleteOutlined
 } from "@ant-design/icons";
+import DeleteMovieModal from "./DeleteMovieModal";
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMovie, setEditMovie] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteMovie, setDeleteMovie] = useState(null);
   const getData = async () => {
     const response = await getAllMovies();
     let allMovies = response.data;
@@ -25,10 +28,13 @@ function MovieList() {
   }
   const handleEdit = (value) => {
     setIsModalOpen(true);
+    setIsDeleteModalOpen(false);
     setEditMovie(value);
   };
   const handleDelete = (value) => {
-    console.log(value);
+    setIsModalOpen(false);
+    setIsDeleteModalOpen(true);
+    setDeleteMovie(value);
   };
 
   useEffect(() => {
@@ -127,6 +133,14 @@ function MovieList() {
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             isEditMovie={isEditMovie}
+          />
+        }
+        {
+          isDeleteModalOpen &&
+          <DeleteMovieModal
+            isDeleteModalOpen={isDeleteModalOpen}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
+            deleteSelectedMovie={deleteMovie}
           />
         }
         <Table columns={tableHeadings} dataSource={movies} scroll={{ x: 'max-content' }} />

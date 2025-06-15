@@ -35,12 +35,23 @@ function MovieForm({ isModalOpen, setIsModalOpen, isEditMovie }) {
     if (!isEditMovie) {
       const response = await addMovie(values);
       console.log(response);
+      if(response.success) {
+        message.success(response.message);
+      } else {
+        message.error(response.message);
+      }
     } else {
       const editedMovie = values;
       editedMovie.movieId = isEditMovie._id
       const response = await updateMovie(values);
       console.log(response);
+      if(response.success) {
+        message.success(response.message);
+      } else {
+        message.error(response.message);
+      }
     }
+    setIsModalOpen(false);
   }
 
   return (
@@ -48,6 +59,7 @@ function MovieForm({ isModalOpen, setIsModalOpen, isEditMovie }) {
       open={isModalOpen}
       onCancel={handleCancel}
       width={800}
+      footer={null}
     >
       <Form
         form={form}

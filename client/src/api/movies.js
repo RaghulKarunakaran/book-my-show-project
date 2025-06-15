@@ -19,7 +19,6 @@ export const addMovie = async (values) => {
 }
 
 export const updateMovie = async (values) => {
-    console.log(values);
     try {
         const response = await axiosInstance.put('api/movies/update-movie', values);
         return response.data;
@@ -35,5 +34,15 @@ export const getMovieById = async (id) => {
         return response.data;
     }catch(err){
         return err.response
+    }
+}
+
+export const deleteMovie = async (values) => {
+    const movieId = values.movieId;
+    try {
+        const response = await axiosInstance.delete('api/movies/delete-movie', { data: { movieId } });
+        return response.data;
+    } catch (error) {
+        console.log(error);
     }
 }
