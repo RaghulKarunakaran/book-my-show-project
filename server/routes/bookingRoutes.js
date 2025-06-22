@@ -1,48 +1,47 @@
 const router = require('express').Router();
-const stripe = require('stripe')('sk_test_51JKPQWSJULHQ0FL7LbqLKOaIcjurlUcdP2hJQkXZw3txlhh0hFrEEEOTwdVxf6sWKqLIrerKpV5EfGvmvntYu7Mt00vJq4YQKL');
 const authMiddleware = require("../middlewares/authMiddleware");
 const Booking = require('../models/bookingModel');
 const Show = require('../models/showModel');
 
-router.post('/make-payment',  async (req, res) => {
-    try{
-        const {token, amount} = req.body;
-        const customer = await stripe.customers.create({
-            email: token.email,
-            source: token.id
-        });
+// router.post('/make-payment',  async (req, res) => {
+//     try{
+//         const {token, amount} = req.body;
+//         const customer = await stripe.customers.create({
+//             email: token.email,
+//             source: token.id
+//         });
 
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: amount,
-            currency: 'usd',
-            customer: customer.id,
-            payment_method_types: ['card'],
-            receipt_email: token.email,
-            description: "Token has been assigned to the movie!"
-        });
+//         const paymentIntent = await stripe.paymentIntents.create({
+//             amount: amount,
+//             currency: 'usd',
+//             customer: customer.id,
+//             payment_method_types: ['card'],
+//             receipt_email: token.email,
+//             description: "Token has been assigned to the movie!"
+//         });
 
-        // const charge = await stripe.charges.create({
-        //     amount: amount,
-        //     currency: "usd",
-        //     customer: customer.id,
-        //     receipt_email: token.email,
-        //     description: "Token has been assigned to the movie!"
-        // });
+//         // const charge = await stripe.charges.create({
+//         //     amount: amount,
+//         //     currency: "usd",
+//         //     customer: customer.id,
+//         //     receipt_email: token.email,
+//         //     description: "Token has been assigned to the movie!"
+//         // });
         
-        const transactionId = paymentIntent.id;
+//         const transactionId = paymentIntent.id;
 
-        res.send({
-            success: true,
-            message: "Payment Successful! Ticket(s) booked!",
-            data: transactionId
-        });
-    }catch(err){
-        res.send({
-            success: false,
-            message: err.message
-        })
-    }
-});
+//         res.send({
+//             success: true,
+//             message: "Payment Successful! Ticket(s) booked!",
+//             data: transactionId
+//         });
+//     }catch(err){
+//         res.send({
+//             success: false,
+//             message: err.message
+//         })
+//     }
+// });
 
 // Create a booking after the payment
 router.post('/book-show',  async (req, res) => {
