@@ -66,6 +66,7 @@ function ProtectedRoute({children}) {
     }
   }
   useEffect(() => {
+    console.log('ProtectedRoute gets triggered');
     if (localStorage.getItem('token')) {
       getValidUser();
     } else {
