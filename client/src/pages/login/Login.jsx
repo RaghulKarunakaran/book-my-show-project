@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { LoginUser } from '../../api/users';
 import { useEffect } from 'react';
@@ -12,20 +11,17 @@ function Login() {
       const response = await LoginUser(values);
       if (response.success) {
         localStorage.setItem('token', response.token);
-        console.log(response);
         message.success("user Logged in");
-        window.location.href = '/';
+        navigate("/");
       } else {
-        console.log(response.message);
         message.error(response.message);
       }
     } catch (error) {
-      console.log(error);
+      message.error(error);
     }
   }
 
   const goToRegister = () => {
-    console.log('go to register');
     navigate("/register");
   }
 
