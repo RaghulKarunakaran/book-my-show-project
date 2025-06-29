@@ -6,6 +6,7 @@ import { useState } from "react";
 import { message, Menu, Layout } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 import {
   HomeOutlined,
@@ -23,12 +24,14 @@ function ProtectedRoute({children}) {
 
   const navItems = [
     {
-      label: "Home",
+      label: <Link to="/">Home</Link>,
       icon: <HomeOutlined />,
+      key: "/",
     },
     {
       label: `${user? user.name : ""}`,
       icon: <UserOutlined />,
+      key: "user",
       children: [
         {
           label: (
@@ -40,7 +43,8 @@ function ProtectedRoute({children}) {
               My Profile
             </span>
           ),
-          icon: <ProfileOutlined/>
+          icon: <ProfileOutlined/>,
+          key: user?.isAdmin ? "/admin" : "/profile"
         },
         {
           label: (
@@ -49,10 +53,13 @@ function ProtectedRoute({children}) {
             }}>Logout</Link>
           ),
           icon: <LogoutOutlined />,
+          key: "/login",
         }
       ]
     }
   ]
+
+  const location = useLocation();
 
   const getValidUser = async () => {
     try {
@@ -91,7 +98,7 @@ function ProtectedRoute({children}) {
           <h3 className="demo-logo text-white m-0" style={{ color: "white" }}>
             Book My Show
           </h3>
-          <Menu theme="dark" mode="horizontal" items={navItems} />
+          <Menu theme="dark" mode="horizontal" items={navItems} selectedKeys={[location.pathname]} />
 
         </Header>
         <div style={{ padding: 24, minHeight: 380, background: "#fff" }}>
