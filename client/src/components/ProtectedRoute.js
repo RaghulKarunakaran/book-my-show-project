@@ -7,6 +7,8 @@ import { message, Menu, Layout } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice";
 
 import {
   HomeOutlined,
@@ -19,8 +21,9 @@ function ProtectedRoute({children}) {
   // all the logic for validating the token 
   // redirection to login page
 
-  const [user, setUser] = useState({});
+  const [userdata, setUserData] = useState({});
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const navItems = [
     {
@@ -29,7 +32,7 @@ function ProtectedRoute({children}) {
       key: "/",
     },
     {
-      label: `${user? user.name : ""}`,
+      label: `${userdata? userdata.name : ""}`,
       icon: <UserOutlined />,
       key: "user",
       children: [
@@ -37,14 +40,14 @@ function ProtectedRoute({children}) {
           label: (
             <span
               onClick={() => {
-                user.isAdmin ? navigate("/admin") : navigate("/profile")
+                userdata.isAdmin ? navigate("/admin") : navigate("/profile")
               }}
             >
               My Profile
             </span>
           ),
           icon: <ProfileOutlined/>,
-          key: user?.isAdmin ? "/admin" : "/profile"
+          key: userdata?.isAdmin ? "/admin" : "/profile"
         },
         {
           label: (
@@ -65,7 +68,9 @@ function ProtectedRoute({children}) {
     try {
       const response = await GetCurrentUser();
       console.log(response);
-      setUser(response.data);
+      setUserData(response.data);
+      dispatch(setUser(response.data));   
+      
       // navigate('/login');
     } catch(error) {
       console.log(error);

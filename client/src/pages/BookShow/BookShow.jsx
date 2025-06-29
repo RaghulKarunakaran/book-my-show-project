@@ -5,12 +5,14 @@ import { message, Card, Row, Col, Button } from "antd";
 import moment from "moment";
  import { bookShow, makePayment } from "../../api/bookings";
 import StripeCheckout from 'react-stripe-checkout';
+import { useSelector } from "react-redux";
 
 const BookShow = () => {
   const [show, setShow] = useState();
   const [selectedSeats, setSelectedSeats] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
   const getData = async () => {
     try {
       const response = await getShowById({ showId: params.id });
@@ -115,7 +117,7 @@ const BookShow = () => {
 
   const book = async (transactionId) => {
       try{
-          const response = await bookShow({show: params.id, transactionId, seats: selectedSeats, user: "666a6bf13c3c74c37c9ad81a"});
+          const response = await bookShow({show: params.id, transactionId, seats: selectedSeats, user: user._id});
           if(response.success){
               message.success("Show Booking done!");
               navigate("/profile");
