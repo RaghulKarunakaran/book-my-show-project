@@ -90,5 +90,3 @@ router.get('/movie/:id', async (req, res) => {
 });
 
 module.exports = router;
-
-// {movieId: 626272,name:"Learn express"}

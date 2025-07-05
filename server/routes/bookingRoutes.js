@@ -20,14 +20,6 @@ router.post('/make-payment',  async (req, res) => {
             receipt_email: token.email,
             description: "Token has been assigned to the movie!"
         });
-
-        // const charge = await stripe.charges.create({
-        //     amount: amount,
-        //     currency: "usd",
-        //     customer: customer.id,
-        //     receipt_email: token.email,
-        //     description: "Token has been assigned to the movie!"
-        // });
         
         const transactionId = paymentIntent.id;
 

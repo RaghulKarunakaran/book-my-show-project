@@ -18,7 +18,6 @@ const DeleteTheatreModal = ({
       dispatch(showLoading);
       const theatreId = selectedTheatre._id;
       const response = await deleteTheatre({ theatreId });
-      console.log(theatreId, response);
       if (response.success) {
         message.success(response.message);
         getData();

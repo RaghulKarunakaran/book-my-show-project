@@ -5,16 +5,9 @@ import { showLoading, hideLoading } from '../../redux/loaderSlice';
 import { useDispatch } from 'react-redux';
 import { addTheatre, updateTheatre } from '../../api/theatres';
 import TextArea from 'antd/es/input/TextArea';
-import { useSelector } from 'react-redux';
 
 const TheatreFormModal = ({isModalOpen, setIsModalOpen, selectedTheatre, setSelectedTheatre, formType, getData}) => {
-    const dispatch = useDispatch();
-    const { user } = useSelector((state) => state.user)
-
-  // const handleChange = (value) => {
-  //   console.log(`selected ${value}`);
-  // }
-
+  const dispatch = useDispatch();
   const onFinish = async (values)  => {
     try{
       dispatch(showLoading());
@@ -25,7 +18,6 @@ const TheatreFormModal = ({isModalOpen, setIsModalOpen, selectedTheatre, setSele
         values.theatreId = selectedTheatre._id;
         response = await updateTheatre(values);
       }
-      console.log(response);
       if(response.success){
         getData();
         message.success(response.message);

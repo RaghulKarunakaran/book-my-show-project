@@ -1,16 +1,12 @@
 import { Modal, Button, message } from 'antd';
 import {deleteMovie} from "../../api/movies"
 function DeleteMovieModal({ isDeleteModalOpen, setIsDeleteModalOpen, deleteSelectedMovie}) {
-    console.log(isDeleteModalOpen);
-    console.log(setIsDeleteModalOpen);
-    console.log(deleteSelectedMovie);
     const handleCancel = () => {
         setIsDeleteModalOpen(false);
     };
     const handleDelete = async () => {
         deleteSelectedMovie.movieId = deleteSelectedMovie._id
         const response = await deleteMovie(deleteSelectedMovie);
-        console.log(response);
         if(response.success) {
             message.success(response.message);
         } else {
@@ -23,7 +19,7 @@ function DeleteMovieModal({ isDeleteModalOpen, setIsDeleteModalOpen, deleteSelec
     <Modal
       open={isDeleteModalOpen}
       onCancel={handleCancel}
-      footer={null} // remove default buttons
+      footer={null}
       centered
       width={400}
     >

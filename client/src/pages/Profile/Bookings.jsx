@@ -18,11 +18,10 @@ const Bookings = () => {
             const response = await getAllBookings();
             if(response.success){
                 setBookings(response.data);
-                 console.log(response.data);
+                message.info('Fetching Bookings');
             }else{
                 message.error(response.message);
             }
-
             dispatch(hideLoading());
         }catch(err){
             message.error(err.message);

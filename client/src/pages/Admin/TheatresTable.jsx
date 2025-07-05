@@ -28,7 +28,6 @@ const TheatresTable = () => {
         try{
           let values = {...theatres, theatreId: theatre._id, isActive: !theatre.isActive}
           const response = await updateTheatre(values);
-          console.log(response, theatre);
           if(response.success){
             message.success(response.message);
             getData();
@@ -93,8 +92,6 @@ const TheatresTable = () => {
       useEffect(() => {
         getData();
       }, []);
-
-      // console.log(theatres.length > 0 && theatres);
 
     return(
       <>

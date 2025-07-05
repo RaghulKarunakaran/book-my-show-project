@@ -12,18 +12,16 @@ function Register() {
       const response = await RegisterUser(values);
       if (response.success) {
         message.success("user Created Successfully");
-        window.location.href = '/login';
+        navigate("/login");
       } else {
-        console.log(response.message);
         message.error(response.message);
       }
     } catch (error) {
-      console.log(error);
+      message.error(error.message);
     }
   }
 
   const goToLogin = () => {
-    console.log('go to login');
     navigate("/login");
   }
 

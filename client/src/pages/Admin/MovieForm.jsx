@@ -1,5 +1,4 @@
 import { Col, Modal, Row, Form, Input, Select, Button, message } from "antd";
-import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
 import {addMovie, updateMovie} from "../../api/movies"
 import {useEffect} from "react";
@@ -34,7 +33,6 @@ function MovieForm({ isModalOpen, setIsModalOpen, isEditMovie }) {
     console.log(values);
     if (!isEditMovie) {
       const response = await addMovie(values);
-      console.log(response);
       if(response.success) {
         message.success(response.message);
       } else {
@@ -44,7 +42,6 @@ function MovieForm({ isModalOpen, setIsModalOpen, isEditMovie }) {
       const editedMovie = values;
       editedMovie.movieId = isEditMovie._id
       const response = await updateMovie(values);
-      console.log(response);
       if(response.success) {
         message.success(response.message);
       } else {

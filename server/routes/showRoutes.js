@@ -99,7 +99,4 @@ router.post('/get-show-by-id',  async (req, res) => {
     }
 });
 
-// {"667a32497e2f25b5f0bd81e4": [{}, {}, {}], "667a32497e2f25b5f0bd81e1": [{}, {}, {}]}
-
-
 module.exports = router;

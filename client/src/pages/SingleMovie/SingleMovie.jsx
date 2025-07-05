@@ -26,7 +26,7 @@ function SingleMovie() {
       const response = await getMovieById(params.id);
       if (response.success) {
         setMovie(response.data);
-        console.log(response.data);
+        message.info('Fetching Selected Movie');
       } else {
         message.error(response.message);
       }
@@ -40,6 +40,7 @@ function SingleMovie() {
       const response = await getAllTheatresByMovie({ movie: params.id, date });
       if (response.success) {
         setTheatres(response.data);
+        message.info('Fetching Theatres');
       } else {
         message.error(response.message);
       }

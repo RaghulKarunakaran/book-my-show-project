@@ -18,8 +18,6 @@ const BookShow = () => {
       const response = await getShowById({ showId: params.id });
       if (response.success) {
         setShow(response.data);
-        // message.success(response.message);
-        console.log(response.data);
       } else {
         message.error(response.message);
       }
@@ -45,29 +43,6 @@ const BookShow = () => {
           {Array.from(Array(rows).keys()).map((row) => {
             return Array.from(Array(columns).keys()).map((column) => {
               let seatNumber = row * columns + column + 1;
-
-              // Calculation for the first iteration
-              // 0*12 + 0+1 = 1
-              // 0*12 + 1+1 = 2
-              // 0*12 + 2+1 = 3
-              // So on up till 12th seat
-
-              // Calculation for the second iteration
-              // 1*12 + 0+1 = 13
-              // 1*12 + 1+1 = 14
-              // 1*12 + 2+1 = 15
-              // So on up till 24th seat
-
-              // Calculation for the third iteration
-              // 2*12 + 0+1 = 25
-              // 2*12 + 1+1 = 26
-              // 2*12 + 2+1 = 27
-              // So on up till 36th seat
-
-              // So on...
-
-              // this part
-
               let seatClass = "seat-btn";
 
               if (selectedSeats.includes(seatNumber)) {
@@ -135,7 +110,6 @@ const BookShow = () => {
           if(response.success){
               message.success(response.message);
               book(response.data)
-              // console.log(response);
           }else{
               message.error(response.message);
           }
@@ -143,10 +117,6 @@ const BookShow = () => {
           message.error(err.message);
       }
   }
-
-  // const onToken=(token)=>{
-  //  console.log(token)
-  // }
 
   useEffect(() => {
     getData();

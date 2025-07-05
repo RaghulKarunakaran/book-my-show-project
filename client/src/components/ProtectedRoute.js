@@ -20,7 +20,6 @@ import {
 function ProtectedRoute({children}) {
   // all the logic for validating the token 
   // redirection to login page
-
   const [userdata, setUserData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -67,13 +66,9 @@ function ProtectedRoute({children}) {
   const getValidUser = async () => {
     try {
       const response = await GetCurrentUser();
-      console.log(response);
       setUserData(response.data);
       dispatch(setUser(response.data));   
-      
-      // navigate('/login');
     } catch(error) {
-      console.log(error);
       message.error(error.message);
     }
   }
@@ -116,5 +111,3 @@ function ProtectedRoute({children}) {
     
 }
 export default ProtectedRoute;
-  
-  // children

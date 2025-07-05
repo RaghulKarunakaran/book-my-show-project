@@ -25,7 +25,6 @@ const TheatreList = () => {
           const response = await getAllTheatres({ owner: '66762d162815c743d84cf2fb' });
           if(response.success){
             const allTheatres = response.data;
-            // console.log(allTheatres);
             setTheatres(
                 allTheatres.map(function(item){
                 return {...item, key: `theatre${item._id}`}
