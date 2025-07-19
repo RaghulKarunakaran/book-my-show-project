@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { message } from "antd";
 
 export const axiosInstance = axios.create({
     headers: {
@@ -16,3 +17,18 @@ axiosInstance.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 );
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+
+    // Rate limit error (429)
+    if (status === 429) {
+      message.error("Too many requests. Please try again later.");
+    }
+
+    return Promise.reject(error);
+  }
+);
+
