@@ -159,12 +159,14 @@ const BookShow = () => {
               style={{ width: "100%" }}
             >
               {getSeats()}
-              { selectedSeats.length > 0 && <StripeCheckout  token={onToken}  billingAddress amount={selectedSeats.length * show.ticketPrice * 100} 
+              { selectedSeats.length > 0 && 
+              <StripeCheckout  token={onToken}  billingAddress amount={selectedSeats.length * show.ticketPrice * 100} 
                 stripeKey="pk_test_51JKPQWSJULHQ0FL7VOkMrOMFh0AHMoCFit29EgNlVRSvFkDxSoIuY771mqGczvd6bdTHU1EkhJpojOflzoIFGmj300Uj4ALqXa">
                     { /* Use this one in some situation=> pk_test_eTH82XLklCU1LJBkr2cSDiGL001Bew71X8  */ }
                     <div className="max-width-600 mx-auto">
                         <Button type="primary" shape="round" size="large" block>Pay Now</Button>
-                    </div></StripeCheckout>}
+                    </div>
+              </StripeCheckout>}
             </Card>
           </Col>
         </Row>
